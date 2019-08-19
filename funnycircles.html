@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<canvas id="myCanvas" width="1368px" height="768px" style="border:1px solid #d3d3d3;"></canvas>
+<script>
+    let ctx = document.getElementById("myCanvas").getContext("2d");
+function Circle(x,y,radius,dx,dy) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.dx = dx;
+    this.dy = dy;
+}
+
+function getRandomHex(){
+    return Math.floor(Math.random()*255);
+}
+function getRandomColor(){
+    let red = getRandomHex();
+    let green =getRandomHex();
+    let blue =getRandomHex();
+    return "rgb("+red+","+green+","+blue+")";
+}
+    let radius = Math.floor(Math.random() * 80);
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+    let dx = 6;
+    let dy = 6;
+    let circle = new Circle(x, y, radius,dx,dy);
+function createCircle() {
+    ctx.clearRect(0,0,document.getElementById("myCanvas").width,document.getElementById("myCanvas").height);
+
+
+    getRandomColor();
+
+    ctx.beginPath();
+    ctx.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI);
+    //ctx.fillStyle = getRandomColor();
+    ctx.fill();
+    if(circle.x<circle.radius || circle.x > document.getElementById("myCanvas").width-circle.radius){
+        dx=-dx;
+        ctx.fillStyle = getRandomColor();
+    }
+    if(circle.y<circle.radius || circle.y > document.getElementById("myCanvas").height-circle.radius){
+        dy = -dy;
+        ctx.fillStyle = getRandomColor();
+    }
+    circle.x +=dx;
+    circle.y +=dy;
+    requestAnimationFrame(createCircle);
+}
+function createCircles() {
+    createCircle();
+
+}
+createCircles();
+</script>
+</body>
+</html>
